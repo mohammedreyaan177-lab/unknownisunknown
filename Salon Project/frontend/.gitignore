@@ -1,0 +1,14 @@
+# Vite / React
+dist
+node_modules
+*.local
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Logs
+logs
+*.log
+npm-debug.log*

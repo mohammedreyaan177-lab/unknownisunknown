@@ -1,0 +1,80 @@
+/* ============================================================
+   SHADES 360 · Salon — design tokens
+   Warm ivory paper, espresso ink, bronze accent. Precision radii,
+   hairline structure, no card-kit shadows.
+   ============================================================ */
+
+:root {
+  /* --- Paper & surfaces --- */
+  --paper: #faf7f1;
+  --surface: #fffdf9;
+  --surface-sunk: #f3ede3;
+  --rail: #241f1a;
+  --rail-raised: #2e2822;
+
+  /* --- Ink --- */
+  --ink: #241f1a;
+  --ink-strong: #17130f;
+  --ink-muted: #6d6157;
+  --ink-faint: #9a8d81;
+  --ink-on-rail: #efe8dd;
+  --ink-on-rail-muted: #a89c8e;
+
+  /* --- Structure --- */
+  --line: #e3dbcd;
+  --line-strong: #cfc4b1;
+  --line-on-rail: #3c342c;
+
+  /* --- Accent (muted bronze) --- */
+  --accent: #8a6a3b;
+  --accent-deep: #6a4e28;
+  --accent-wash: #f0e7d8;
+  --accent-line: #d8c6a8;
+
+  /* --- Status --- */
+  --ok: #4c6a4f;
+  --ok-wash: #e9efe6;
+  --warn: #96682a;
+  --warn-wash: #f6eddd;
+  --danger: #97392c;
+  --danger-wash: #f7e7e3;
+  --info: #44586d;
+  --info-wash: #e7ecf1;
+
+  /* --- Type --- */
+  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-ui: 'Manrope', ui-sans-serif, 'Segoe UI', system-ui, sans-serif;
+
+  /* Fluid editorial scale */
+  --t-display: clamp(2.35rem, 1.4rem + 2.9vw, 3.6rem);
+  --t-title: clamp(1.75rem, 1.25rem + 1.5vw, 2.5rem);
+  --t-heading: clamp(1.15rem, 1rem + 0.5vw, 1.4rem);
+  --t-body: 0.975rem;
+  --t-small: 0.855rem;
+  --t-micro: 0.755rem;
+
+  /* --- Space --- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+
+  /* --- Form --- */
+  --r-sm: 3px;
+  --r-md: 4px;
+  --r-lg: 8px;
+  --r-pill: 999px;
+
+  --shadow-panel: 0 1px 2px rgb(36 31 26 / 0.04), 0 12px 32px -18px rgb(36 31 26 / 0.22);
+  --shadow-pop: 0 2px 4px rgb(36 31 26 / 0.05), 0 24px 56px -20px rgb(36 31 26 / 0.3);
+
+  --rail-w: 264px;
+  --measure: 68ch;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 180ms;
+}
