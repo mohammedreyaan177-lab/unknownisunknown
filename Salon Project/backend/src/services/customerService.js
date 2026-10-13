@@ -2,8 +2,27 @@ const pool = require("../config/db")
 
 //Create Customer
 
+// BACKEND CHANGE: Reject a blank or whitespace-only name/phone on create and update.
+// Reason: `customers.name` and `customers.phone` are NOT NULL, but an empty string
+//   is not null, so the database stored junk. Reproduced against the running API:
+//     POST /customer {name:"",   phone:"95000001"} -> 201, row saved with name=""
+//     POST /customer {name:"   ", phone:"95000002"} -> 201, row saved with name="   "
+//   The phone case repeated the email defect exactly: the first blank-phone customer
+//   saved, and the second was refused by the UNIQUE index with a raw driver message
+//   the UI cannot explain -
+//     "duplicate key value violates unique constraint \"customers_phone_key\""
+//   The form marks these fields required and validates them, but the endpoint is
+//   directly callable, so the server must hold the rule.
+// Scope: Minimal - guard clauses in the two write paths. No schema change, no new
+//   endpoint, and every genuine value continues to work unchanged.
 const createCustomer = async(name , phone , email , date_of_birth , notes) =>{
     try{
+        if(!name || !String(name).trim()){
+            throw new Error("Customer name is required.")
+        }
+        if(!phone || !String(phone).trim()){
+            throw new Error("Phone number is required.")
+        }
         const customer = await pool.query("select * from customers where email = $1",[email])
         if(customer.rows.length > 0){
             throw new Error("The customer already exists")
@@ -73,6 +92,12 @@ const deleteCustomer = async(id) =>{
 
 const updateCustomer = async(name , phone , email , date_of_birth , notes, id) =>{
     try{
+        if(!name || !String(name).trim()){
+            throw new Error("Customer name is required.")
+        }
+        if(!phone || !String(phone).trim()){
+            throw new Error("Phone number is required.")
+        }
         const customer = await pool.query("update customers set name = $1, phone = $2 , email =$3 , date_of_birth =$4 , notes = $5,updated_at =CURRENT_TIMESTAMP where id = $6 returning *",[name ,phone , email , date_of_birth , notes ,id])
         if (customer.rows.length === 0) {
             return{

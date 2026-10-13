@@ -3,6 +3,7 @@ const router = express.Router()
 const authMiddleware = require('../middleware/authMiddleware')
 const appointmentController = require('../controllers/appointmentController')
 
+router.post("/avail", authMiddleware.authenticate , appointmentController.checkAvailabilityController)
 router.post("/", authMiddleware.authenticate , appointmentController.createAppointmentController)
 router.get("/", authMiddleware.authenticate , appointmentController.getAllAppointmentsController)
 router.get("/:id" , authMiddleware.authenticate , appointmentController.getAppointmentByIdController)

@@ -39,7 +39,16 @@ const createStaff = async(name , email , password , phone , specialization) =>{
 
 const getAllStaffs = async() =>{
     try{
-        const staff = await pool.query("select * from public.staff")
+        // BACKEND CHANGE: Corrected GET /staff returning no name or email for any staff member.
+        // Reason: The V1 Staff screen and the appointment "professional" picker both need a staff
+        //   member's name. `name`/`email` live in `users` and were never joined, so the endpoint
+        //   returned only `staff.user_id`. Compounding it, PUT /staff/:id requires `name` and
+        //   `email` in the body, so editing or toggling is_active from the list forced the client
+        //   to send empty strings and wipe the linked user record. No frontend-only fix was
+        //   possible: no other endpoint exposes a staff member's identity.
+        // Scope: Minimal correction - an inner join onto the existing FK. No schema, auth,
+        //   validation or response-shape change; all existing `staff.*` columns are preserved.
+        const staff = await pool.query("select s.*, u.name, u.email from public.staff s join users u on u.id = s.user_id")
         return {
             users : staff.rows
         }
